@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- NUnit adapter configuration -->
+  <NUnit>
+    <!-- Number of test workers for parallel execution (3 browsers × 2 tests each) -->
+    <NumberOfTestWorkers>6</NumberOfTestWorkers>
+    
+    <!-- Default timeout for each test in milliseconds (5 minutes) -->
+    <DefaultTimeout>300000</DefaultTimeout>
+    
+    <!-- Work directory for output files -->
+    <WorkDirectory>.</WorkDirectory>
+    
+    <!-- Test output verbosity -->
+    <Verbosity>3</Verbosity>
+    
+    <!-- Stop on first error -->
+    <StopOnError>false</StopOnError>
+  </NUnit>
+  
+  <!-- Test run parameters (accessible via TestContext) -->
+  <TestRunParameters>
+    <Parameter name="Browser" value="Chrome" />
+    <Parameter name="Headless" value="false" />
+    <Parameter name="Environment" value="Development" />
+  </TestRunParameters>
+  
+  <!-- Data collection settings -->
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <!-- Enable code coverage if needed -->
+      <!--
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+        </Configuration>
+      </DataCollector>
+      -->
+    </DataCollectors>
+  </DataCollectionRunSettings>
+  
+  <!-- Run configuration -->
+  <RunConfiguration>
+    <!-- Maximum CPU count for parallel execution (supports cross-browser testing) -->
+    <MaxCpuCount>6</MaxCpuCount>
+    
+    <!-- Results directory -->
+    <ResultsDirectory>.\TestResults</ResultsDirectory>
+    
+    <!-- Target framework -->
+    <TargetFrameworkVersion>net8.0</TargetFrameworkVersion>
+    
+    <!-- Test session timeout in milliseconds (30 minutes) -->
+    <TestSessionTimeout>1800000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>
