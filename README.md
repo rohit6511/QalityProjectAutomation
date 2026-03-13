@@ -434,7 +434,3 @@ For issues or questions:
 ## License
 
 This project is provided as-is for educational and professional use.
-=======
-# QalityProjectAutomation
-Selenium UI Automation Framework using C#, NUnit, POM and SpecFlow
->>>>>>> 737f75d633a14135d1c9b86059591df9eb842b5a
