@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Quality Automation Framework
 
 A professional, enterprise-grade UI Automation Testing Framework built with C#, Selenium WebDriver, NUnit, and Reqnroll (SpecFlow successor) implementing the Page Object Model (POM) design pattern.
