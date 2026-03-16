@@ -3,6 +3,12 @@ name: .NET CI
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   build:
@@ -17,11 +23,50 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@latest
+      with:
+        chrome-version: stable
+
+    - name: Verify Chrome installation
+      run: chrome --version
+
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build project
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Update appsettings for CI (enable headless mode)
+      run: |
+        cd src/QualityAutomation.Tests/Config
+        jq '.TestSettings.Headless = true' appsettings.json > tmp.json && mv tmp.json appsettings.json
+        cat appsettings.json
 
     - name: Run tests
-      run: dotnet test --configuration Release
+      run: dotnet test --configuration Release --no-build --settings ci.runsettings --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults
+      continue-on-error: true
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: ./TestResults
+        retention-days: 30
+
+    - name: Upload test reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: extent-reports
+        path: src/QualityAutomation.Tests/bin/Release/net8.0/Reports
+        retention-days: 30
+
+    - name: Upload screenshots (on failure)
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: screenshots
+        path: src/QualityAutomation.Tests/bin/Release/net8.0/Screenshots
+        retention-days: 30

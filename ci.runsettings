@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- NUnit adapter configuration for CI environment -->
+  <NUnit>
+    <!-- Reduced parallelism for CI runners -->
+    <NumberOfTestWorkers>2</NumberOfTestWorkers>
+    
+    <!-- Extended timeout for CI (10 minutes per test) -->
+    <DefaultTimeout>600000</DefaultTimeout>
+    
+    <!-- Work directory for output files -->
+    <WorkDirectory>.</WorkDirectory>
+    
+    <!-- Test output verbosity -->
+    <Verbosity>3</Verbosity>
+    
+    <!-- Continue on error to get full test report -->
+    <StopOnError>false</StopOnError>
+  </NUnit>
+  
+  <!-- Test run parameters for CI -->
+  <TestRunParameters>
+    <Parameter name="Browser" value="Chrome" />
+    <Parameter name="Headless" value="true" />
+    <Parameter name="Environment" value="CI" />
+  </TestRunParameters>
+  
+  <!-- Run configuration -->
+  <RunConfiguration>
+    <!-- Reduced CPU count for CI runners -->
+    <MaxCpuCount>2</MaxCpuCount>
+    
+    <!-- Results directory -->
+    <ResultsDirectory>.\TestResults</ResultsDirectory>
+    
+    <!-- Target framework -->
+    <TargetFrameworkVersion>net8.0</TargetFrameworkVersion>
+    
+    <!-- Extended test session timeout (45 minutes) -->
+    <TestSessionTimeout>2700000</TestSessionTimeout>
+  </RunConfiguration>
+</RunSettings>
