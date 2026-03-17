@@ -28,14 +28,19 @@
   <!-- Data collection settings -->
   <DataCollectionRunSettings>
     <DataCollectors>
-      <!-- Enable code coverage if needed -->
-      <!--
+      <!-- Coverlet Code Coverage -->
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
-          <Format>cobertura</Format>
+          <Format>cobertura,opencover,json</Format>
+          <Exclude>[*]*.Tests.*,[*]*.Features.*,[*]*.StepDefinitions.*</Exclude>
+          <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+          <SingleHit>false</SingleHit>
+          <UseSourceLink>true</UseSourceLink>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <SkipAutoProps>true</SkipAutoProps>
+          <DeterministicReport>false</DeterministicReport>
         </Configuration>
       </DataCollector>
-      -->
     </DataCollectors>
   </DataCollectionRunSettings>
   

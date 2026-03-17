@@ -43,9 +43,29 @@ jobs:
         jq '.TestSettings.Headless = true' appsettings.json > tmp.json && mv tmp.json appsettings.json
         cat appsettings.json
 
-    - name: Run tests
-      run: dotnet test --configuration Release --no-build --settings ci.runsettings --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults
+    - name: Run tests with coverage
+      run: dotnet test --configuration Release --no-build --settings ci.runsettings --logger "trx;LogFileName=test-results.trx" --collect:"XPlat Code Coverage" --results-directory ./TestResults
       continue-on-error: true
+
+    - name: Install ReportGenerator
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+    - name: Generate coverage report
+      run: |
+        reportgenerator "-reports:./TestResults/**/coverage.cobertura.xml" "-targetdir:./CoverageReport" "-reporttypes:Html;Cobertura;TextSummary;MarkdownSummaryGithub"
+      continue-on-error: true
+
+    - name: Display coverage summary
+      run: cat ./CoverageReport/Summary.txt || echo "No coverage summary available"
+      continue-on-error: true
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: coverage-report
+        path: ./CoverageReport
+        retention-days: 30
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
