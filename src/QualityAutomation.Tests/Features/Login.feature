@@ -22,6 +22,14 @@ Feature: Login Functionality
         Then I should remain on the login page
         And I should see an error message
 
+    @Negative
+    Scenario: Failed login with invalid username
+        Given I am on the login page
+        When I enter invalid username "invaliduser@test.com"
+        And I enter valid password "Rohit@6511"
+        And I click the login button
+        Then I should remain on the login page
+        And I should see an error message
    
     @Positive
     Scenario Outline: Login with multiple valid user credentials
