@@ -68,6 +68,21 @@ jobs:
         path: ./CoverageReport
         retention-days: 30
 
+    - name: Add Coverage to Summary
+      if: always()
+      run: |
+        echo "## Code Coverage Report" >> $GITHUB_STEP_SUMMARY
+        cat ./CoverageReport/Summary.txt >> $GITHUB_STEP_SUMMARY
+
+    - name: Publish Test Results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: NUnit Test Results
+        path: './TestResults/**/*.trx'
+        reporter: dotnet-trx
+        fail-on-error: false
+
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: always()
